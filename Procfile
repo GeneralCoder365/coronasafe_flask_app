@@ -1,2 +1,1 @@
-web: gunicorn  coronasafe_v2_api:app
---preload
+web: gunicorn  main:app
