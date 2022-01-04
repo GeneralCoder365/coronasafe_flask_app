@@ -23,4 +23,6 @@ def getNumbers():
     return {'data':data}, 200
 
 app.debug = True
-app.run()  
+
+if __name__ == '__main__':
+    app.run()
