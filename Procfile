@@ -1,1 +1,2 @@
 web: gunicorn  coronasafe_v2_api:app
+--preload
