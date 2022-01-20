@@ -26,7 +26,7 @@ def places_search(search_query: str, str_location, g_api_key = G_API_KEY) -> lis
     # ! %2C is a comma for url requests
     # ! STR_LOCATION = "LATITUDE%2CLONGITUDE"
 
-    
+    # ! TEXT SEARCH DOCUMENTATION: https://developers.google.com/maps/documentation/places/web-service/search-text#json_2
     base_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
     # get method of requests module
     # return response object
