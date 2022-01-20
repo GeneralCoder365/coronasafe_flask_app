@@ -11,15 +11,16 @@ api = Api(app)
 
 @app.route('/getPlaces/', methods=["GET"])
 def search():
-    thingToSearch = request.args.get('search_query')
-    data = cs_backend.places_search(thingToSearch)
+    search_query = request.args.get('search_query')
+    str_location = request.args.get('user_location')
+    data = cs_backend.places_search(search_query, str_location)
     print(data)
     return {'data':data}, 200
 
 @app.route('/getNumbers/', methods=["GET"])
 def getNumbers():
-    thingToSearch = request.args.get('search_query')
-    data = cs_backend.master_risk_calculator(thingToSearch)
+    raw_address = request.args.get('search_query')
+    data = cs_backend.master_risk_calculator(raw_address)
     return {'data':data}, 200
 
 app.debug = True
