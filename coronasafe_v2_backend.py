@@ -25,17 +25,14 @@ G_API_KEY = str(os.getenv('G_API_KEY'))
 def places_search(search_query: str, str_location, g_api_key = G_API_KEY) -> list:
     # ! %2C is a comma for url requests
     # ! STR_LOCATION = "LATITUDE%2CLONGITUDE"
-    
-    # ! SPECIFIES TO USER LOCATION
-    # array_location = str_location.split(',')
-    # latitude = str(array_location[0])
-    # longitude = str(array_location[1])
-    # location_parameter = str(latitude + "%2C" + longitude)
+
     
     base_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
     # get method of requests module
     # return response object
-    r = requests.get(base_url + 'query=' + search_query + '&location=' + str_location + '&key=' + g_api_key)
+    request = str(base_url + 'query=' + search_query + '&location=' + str_location + '&key=' + g_api_key)
+    # print(request)
+    r = requests.get(request)
 
     # stores data in json file
     json_file = r.json()
@@ -60,13 +57,11 @@ def places_search(search_query: str, str_location, g_api_key = G_API_KEY) -> lis
 
             i += 1
 
-    # return formatted_search_results
-    
-    # ! TEMP
-    return [str_location, formatted_search_results]
+    return formatted_search_results
 
 # tester code
-# print(places_search(input("Query: ")))
+# print(places_search(input("Query: "), "39.034072%2C-77.113836"))
+# print(places_search(input("Query: "), "40.7484%2C73.9857"))
 
 
 def master_risk_calculator(raw_address: str, g_api_key = G_API_KEY) -> int:
