@@ -3,7 +3,7 @@ from flask import request
 from flask_restful import Resource, Api, reqparse
 # getting the api key
 import os
-import coronasafe_v2_backend as cs_backend
+import coronasafe_v3_backend as cs_backend
 
 app = Flask(__name__)
 api = Api(app)
@@ -19,11 +19,14 @@ def search():
     print(data)
     return {'data':data}, 200
 
-@app.route('/getNumbers', methods=["GET"])
+@app.route('/getRisk', methods=["GET"])
 def getNumbers():
     raw_address = request.args.get('address')
-    data = cs_backend.master_risk_calculator(raw_address)
+    data = cs_backend.corona_safe(raw_address)
     return {'data':data}, 200
+# (Westfield Montgomery) 7101 Democracy Blvd, Bethesda, MD 20852, United States
+# (Empire State Building) 20 W 34th St, New York, NY 10001
+
 
 app.debug = True
 
