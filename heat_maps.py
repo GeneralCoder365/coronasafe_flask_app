@@ -1,3 +1,4 @@
+import os
 import plotly.express as px
 from plotly.offline import plot
 import plotly.io as pio
@@ -8,7 +9,8 @@ from urllib.request import urlopen
 import json
 
 
-# makes US heat map
+
+# makes US heat map (auto overwrites any existing one)
 def make_us_heat_map():
     ssl._create_default_https_context = ssl._create_unverified_context
     response = urllib.request.urlopen('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv')
@@ -37,7 +39,7 @@ def make_us_heat_map():
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, geo=dict(bgcolor= '#4E5D6C',lakecolor='#4E5D6C'))
     
-    fig.write_html('frontend/assets/temp-plot.html')
+    fig.write_html('maps/us_map.html')
 
     # plot(fig)
 
