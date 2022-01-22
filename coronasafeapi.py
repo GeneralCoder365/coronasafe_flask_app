@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask import request
 from flask_restful import Resource, Api, reqparse
 # getting the api key
@@ -26,6 +26,10 @@ def getNumbers():
     return {'data':data}, 200
 # (Westfield Montgomery) 7101 Democracy Blvd, Bethesda, MD 20852, United States
 # (Empire State Building) 20 W 34th St, New York, NY 10001
+
+@app.route('/getUSCaseMap', methods=["GET"])
+def get_us_heat_map():
+    return render_template('us_map.html')
 
 
 app.debug = True

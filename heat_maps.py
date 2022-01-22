@@ -1,4 +1,4 @@
-import os
+import plotly
 import plotly.express as px
 from plotly.offline import plot
 import plotly.io as pio
@@ -7,8 +7,7 @@ import ssl
 import urllib.request
 from urllib.request import urlopen
 import json
-
-
+from datetime import datetime, time
 
 # makes US heat map (auto overwrites any existing one)
 def make_us_heat_map():
@@ -39,7 +38,8 @@ def make_us_heat_map():
 
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, geo=dict(bgcolor= '#4E5D6C',lakecolor='#4E5D6C'))
     
-    fig.write_html('maps/us_map.html')
+    # fig.write_html('maps/us_map.html')
+    plotly.offline.plot(fig, filename = 'templates/us_map.html', auto_open=False)
 
     # plot(fig)
 
@@ -83,3 +83,13 @@ def make_state_case_graph(state_input):
 
 # tester code -> I think the format for the state is: Ex. "MD"
 # make_state_case_graph("MD")
+
+
+
+# current_time = datetime.now().time()
+# current_time = current_time.strftime("%H:%M:%S")
+# print(current_time)
+# print(str(time.min))
+
+# if (current_time == "12:26:30"):
+#     make_us_heat_map()
