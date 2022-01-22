@@ -27,6 +27,13 @@ def getNumbers():
 # (Westfield Montgomery) 7101 Democracy Blvd, Bethesda, MD 20852, United States
 # (Empire State Building) 20 W 34th St, New York, NY 10001
 
+
+
+@app.route('/createUSHeatMap', methods=["GET"])
+def create_us_heat_map():
+    cs_backend.make_us_heat_map()
+    return {'data':"successfully created US heat map"}, 200
+
 @app.route('/getUSCaseMap', methods=["GET"])
 def get_us_heat_map():
     return render_template('us_map.html')

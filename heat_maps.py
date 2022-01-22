@@ -36,7 +36,9 @@ def make_us_heat_map():
                         scope="usa"
                             )
 
+    fig.update_layout(paper_bgcolor="#4E5D6C")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, geo=dict(bgcolor= '#4E5D6C',lakecolor='#4E5D6C'))
+    # fig.update_layout(margin=dict(l=0, r=0, t=0, b=0))
     
     # fig.write_html('maps/us_map.html')
     plotly.offline.plot(fig, filename = 'templates/us_map.html', auto_open=False)
