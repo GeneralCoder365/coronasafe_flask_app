@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask import request
 from flask_restful import Resource, Api, reqparse
 # getting the api key
-import os
+# import os
 import sys
 import logging
 
