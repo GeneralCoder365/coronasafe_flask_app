@@ -9,7 +9,7 @@ import surrounding_density_calculator as surrounding_density
 
 import heat_maps
 GITHUB_API_TOKEN = str(os.environ['GITHUB_API_TOKEN'])
-print(GITHUB_API_TOKEN)
+# print(GITHUB_API_TOKEN)
 
 
 # Getting Google API Key
