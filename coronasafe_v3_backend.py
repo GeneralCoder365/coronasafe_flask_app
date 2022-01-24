@@ -20,7 +20,7 @@ import os
 # load_dotenv(dotenv_path=dotenv_path)
 # G_API_KEY = str(os.getenv('G_API_KEY'))
 G_API_KEY = os.environ['G_API_KEY']
-print(G_API_KEY)
+# print(G_API_KEY)
 
 
 def places_search(search_query: str, str_location, g_api_key = G_API_KEY) -> list:
@@ -183,8 +183,8 @@ def master_density_calculator(raw_address: str, g_api_key) -> int:
         return False
     
     cumulative_density_rating = round(cumulative_density_rating, 2)
-    # print("local_density_rating", local_density_rating)
-    # print("surrounding_density_rating", surrounding_density_rating)
+    print("local_density_rating", local_density_rating)
+    print("surrounding_density_rating", surrounding_density_rating)
     return cumulative_density_rating
 
 # tester code
