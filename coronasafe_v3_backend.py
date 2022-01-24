@@ -14,7 +14,7 @@ import surrounding_density_calculator as surrounding_density
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-dotenv_path = Path('google_api_key.env')
+dotenv_path = Path('g_api_key.env')
 
 
 load_dotenv(dotenv_path=dotenv_path)
