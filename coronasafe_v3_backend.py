@@ -146,8 +146,10 @@ def get_lat_long(google_api_key, raw_address):
 # from timezonefinder import TimezoneFinder
 def master_density_calculator(raw_address: str, g_api_key) -> int:
     location_latlong = get_lat_long(g_api_key, raw_address)
-    latitude = float(location_latlong[0])
-    longitude = float(location_latlong[1])
+    # print(location_latlong)
+    # print(type(location_latlong[0]))
+    latitude = location_latlong[0]
+    longitude = location_latlong[1]
     # print("latitude: ", latitude)
     # print("longitude: ", longitude)
     
