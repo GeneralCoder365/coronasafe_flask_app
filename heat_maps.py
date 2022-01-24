@@ -1,16 +1,63 @@
+# Getting Chart Studio/Plotly credentials:
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+dotenv_path = Path('chart_studio_credentials.env')
+
+load_dotenv(dotenv_path=dotenv_path)
+CS_USERNAME = str(os.getenv('CS_USERNAME'))
+CS_API_KEY = str(os.getenv('CS_API_KEY'))
+# print(CS_USERNAME)
+# print(CS_API_KEY)
+
+
 import plotly
+import chart_studio.plotly as py
+import chart_studio.tools as tls
 import plotly.express as px
 from plotly.offline import plot
 import plotly.io as pio
 import pandas as pd
+import chart_studio
+chart_studio.tools.set_credentials_file(username=CS_USERNAME, api_key=CS_API_KEY)
+
+
 import ssl
 import urllib.request
 from urllib.request import urlopen
 import json
 from datetime import datetime, time
 
+from github import Github, UnknownObjectException
+dotenv_path = Path('github_api_token.env')
+load_dotenv(dotenv_path=dotenv_path)
+GITHUB_API_TOKEN = str(os.getenv('GITHUB_API_TOKEN'))
+# print(GITHUB_API_TOKEN)
+
+github_object = Github(GITHUB_API_TOKEN)
+repository = github_object.get_user().get_repo('coronasafe_plotly_map_urls')
+
+def github_updater_us_case_map_embed_url(html_embed_url):
+    # path in the repository
+    filename = 'us_case_map_url.txt'
+    content = html_embed_url
+    # create with commit message
+    # file = repository.create_file(filename, "edit_file via PyGithub", content)
+
+    try:
+        file = repository.get_contents(filename)
+        
+        # update file syntax: repository.update_file(path, message, content, sha, branch=NotSet, committer=NotSet, author=NotSet)
+        repository.update_file(file.path, "update us case map url", content, file.sha, branch="main")
+    # Error raised: github.GithubException.UnknownObjectException: 404 {"message": "Not Found", "documentation_url": "https://docs.github.com/rest/reference/repos#get-repository-content"}
+    except UnknownObjectException:
+        file = repository.create_file(filename, "create us_case_map_url.txt", content)
+
+# tester code
+# print(github_updater_us_case_map_embed_url(make_us_case_map()))
+
 # makes US heat map (auto overwrites any existing one)
-def make_us_heat_map():
+def make_us_case_map():
     ssl._create_default_https_context = ssl._create_unverified_context
     response = urllib.request.urlopen('https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv')
     response1 = urllib.request.urlopen('https://raw.githubusercontent.com/jasonong/List-of-US-States/master/states.csv')
@@ -41,12 +88,49 @@ def make_us_heat_map():
     # fig.update_layout(margin=dict(l=0, r=0, t=0, b=0))
     
     # fig.write_html('maps/us_map.html')
-    plotly.offline.plot(fig, filename = 'templates/us_map.html', auto_open=False)
+    # ! plot <-- plotly.offline.plot
+    # plot(fig, filename = 'templates/us_map.html', auto_open=False)
 
-    # plot(fig)
+    plotly_url = py.plot(fig, filename='us_case_map', auto_open=False, sharing='public')
+
+    # html_embed_code = tls.get_embed(plotly_url)
+    # print(html_embed_code)
+    
+    plotly_html_embed_url = plotly_url[:-1] + ".embed"
+    
+    github_updater_us_case_map_embed_url(plotly_html_embed_url)
+    
+    return plotly_html_embed_url
 
 # # tester code
-# make_us_heat_map()
+# print(make_us_case_map())
+
+
+def get_us_case_map():
+    # path in the repository
+    filename = 'us_case_map_url.txt'
+
+    # create with commit message
+    # file = repository.create_file(filename, "edit_file via PyGithub", content)
+
+    try:
+        file = repository.get_contents(filename)
+        
+        # read file
+        us_case_map_html_embed_url = file.decoded_content.decode()
+    
+    # Error raised: github.GithubException.UnknownObjectException: 404 {"message": "Not Found", "documentation_url": "https://docs.github.com/rest/reference/repos#get-repository-content"}
+    except UnknownObjectException:
+        us_case_map_html_embed_url = make_us_case_map()
+
+    
+    return us_case_map_html_embed_url
+
+# tester code
+# print(get_us_case_map())
+
+
+
 
 # makes state case graph
 def make_state_case_graph(state_input):

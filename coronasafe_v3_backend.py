@@ -203,12 +203,17 @@ def corona_safe(raw_address: str, g_api_key = G_API_KEY) -> int:
 # print(corona_safe("(Empire State Building) 20 W 34th St, New York, NY 10001"))
 
 
-def make_us_heat_map():
-    heat_maps.make_us_heat_map()
+def create_us_case_map():
+    return heat_maps.make_us_case_map()
 
 # tester code
-# make_us_heat_map()
+# print(create_us_case_map())
 
+def get_us_case_map():
+    return heat_maps.get_us_case_map()
+
+# tester code
+# print(get_us_case_map())
 
 def make_state_case_graph(state_input):
     # TO CHANGE!

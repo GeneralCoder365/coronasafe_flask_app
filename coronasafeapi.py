@@ -29,14 +29,15 @@ def getNumbers():
 
 
 
-@app.route('/createUSHeatMap', methods=["GET"])
-def create_us_heat_map():
-    cs_backend.make_us_heat_map()
-    return {'data':"successfully created US heat map"}, 200
+@app.route('/createUSCaseMap', methods=["GET"])
+def create_us_case_map():
+    us_case_map_html_embed_url = cs_backend.create_us_case_map()
+    return {'data':us_case_map_html_embed_url}, 200
 
 @app.route('/getUSCaseMap', methods=["GET"])
 def get_us_heat_map():
-    return render_template('us_map.html')
+    us_case_map_html_embed_url = cs_backend.get_us_case_map()
+    return {'data':us_case_map_html_embed_url}, 200
 
 
 app.debug = True
