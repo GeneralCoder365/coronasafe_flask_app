@@ -12,13 +12,14 @@ import surrounding_density_calculator as surrounding_density
 
 # Getting Google API Key
 import os
-from dotenv import load_dotenv
-from pathlib import Path
-dotenv_path = Path('g_api_key.env')
+# from dotenv import load_dotenv
+# from pathlib import Path
+# dotenv_path = Path('g_api_key.env')
 
 
-load_dotenv(dotenv_path=dotenv_path)
-G_API_KEY = str(os.getenv('G_API_KEY'))
+# load_dotenv(dotenv_path=dotenv_path)
+# G_API_KEY = str(os.getenv('G_API_KEY'))
+G_API_KEY = os.environ['G_API_KEY']
 print(G_API_KEY)
 
 
