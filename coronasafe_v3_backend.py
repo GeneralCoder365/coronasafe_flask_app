@@ -9,7 +9,7 @@ import surrounding_density_calculator as surrounding_density
 
 import heat_maps
 GITHUB_API_TOKEN = str(os.environ['GITHUB_API_TOKEN'])
-# print(GITHUB_API_TOKEN)
+print(GITHUB_API_TOKEN)
 
 
 # Getting Google API Key
@@ -220,7 +220,7 @@ def get_us_case_map():
     return heat_maps.get_us_case_map(GITHUB_API_TOKEN)
 
 # tester code
-print(get_us_case_map())
+# print(get_us_case_map())
 
 def make_state_case_graph(state_input):
     # TO CHANGE!

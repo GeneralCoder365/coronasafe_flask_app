@@ -137,7 +137,7 @@ def get_us_case_map(GITHUB_API_TOKEN):
     return us_case_map_html_embed_url
 
 # tester code
-print(get_us_case_map())
+# print(get_us_case_map())
 
 
 
