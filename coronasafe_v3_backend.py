@@ -19,7 +19,7 @@ dotenv_path = Path('google_api_key.env')
 
 load_dotenv(dotenv_path=dotenv_path)
 G_API_KEY = str(os.getenv('G_API_KEY'))
-# print(G_API_KEY)
+print(G_API_KEY)
 
 
 def places_search(search_query: str, str_location, g_api_key = G_API_KEY) -> list:
@@ -31,7 +31,7 @@ def places_search(search_query: str, str_location, g_api_key = G_API_KEY) -> lis
     # get method of requests module
     # return response object
     request = str(base_url + 'query=' + search_query + '&location=' + str_location + '&key=' + g_api_key)
-    # print(request)
+    print(request)
     r = requests.get(request)
 
     # stores data in json file
