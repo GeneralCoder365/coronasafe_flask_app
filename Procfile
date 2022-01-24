@@ -1,1 +1,1 @@
-web: gunicorn  coronasafeapi:app
+web: gunicorn  main:app
