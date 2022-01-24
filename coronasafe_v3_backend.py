@@ -7,7 +7,9 @@ import argparse
 import local_density_calculator as local_density
 import surrounding_density_calculator as surrounding_density
 
-# import heat_maps
+import heat_maps
+GITHUB_API_TOKEN = str(os.environ['GITHUB_API_TOKEN'])
+# print(GITHUB_API_TOKEN)
 
 
 # Getting Google API Key
@@ -20,7 +22,7 @@ import os
 # G_API_KEY = str(os.getenv('G_API_KEY'))
 
 
-G_API_KEY = os.environ['G_API_KEY']
+G_API_KEY = str(os.environ['G_API_KEY'])
 # print(G_API_KEY)
 
 
@@ -208,17 +210,17 @@ def corona_safe(raw_address: str, g_api_key = G_API_KEY) -> int:
 # print(corona_safe("(Empire State Building) 20 W 34th St, New York, NY 10001"))
 
 
-# def create_us_case_map():
-#     return heat_maps.make_us_case_map()
-
-# # tester code
-# # print(create_us_case_map())
-
-# def get_us_case_map():
-#     return heat_maps.get_us_case_map()
+def create_us_case_map():
+    return heat_maps.create_us_case_map(GITHUB_API_TOKEN)
 
 # tester code
-# print(get_us_case_map())
+# print(create_us_case_map())
+
+def get_us_case_map():
+    return heat_maps.get_us_case_map(GITHUB_API_TOKEN)
+
+# tester code
+print(get_us_case_map())
 
 def make_state_case_graph(state_input):
     # TO CHANGE!

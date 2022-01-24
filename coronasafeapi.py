@@ -17,11 +17,11 @@ app.logger.setLevel(logging.ERROR)
 @app.route('/getPlaces', methods=["GET"])
 def search():
     search_query = request.args.get('query')
-    print("search_query: ", search_query)
+    # print("search_query: ", search_query)
     str_location = request.args.get('location')
-    print("str_location: ", str_location)
+    # print("str_location: ", str_location)
     data = cs_backend.places_search(search_query, str_location)
-    print(data)
+    # print(data)
     return {'data':data}, 200
 
 @app.route('/getRisk', methods=["GET"])
