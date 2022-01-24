@@ -7,7 +7,7 @@ import argparse
 import local_density_calculator as local_density
 import surrounding_density_calculator as surrounding_density
 
-import heat_maps
+# import heat_maps
 
 
 # Getting Google API Key
@@ -203,14 +203,14 @@ def corona_safe(raw_address: str, g_api_key = G_API_KEY) -> int:
 # print(corona_safe("(Empire State Building) 20 W 34th St, New York, NY 10001"))
 
 
-def create_us_case_map():
-    return heat_maps.make_us_case_map()
+# def create_us_case_map():
+#     return heat_maps.make_us_case_map()
 
-# tester code
-# print(create_us_case_map())
+# # tester code
+# # print(create_us_case_map())
 
-def get_us_case_map():
-    return heat_maps.get_us_case_map()
+# def get_us_case_map():
+#     return heat_maps.get_us_case_map()
 
 # tester code
 # print(get_us_case_map())
