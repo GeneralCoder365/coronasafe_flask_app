@@ -37,6 +37,7 @@ def places_search(search_query: str, str_location, g_api_key = G_API_KEY) -> lis
     # stores data in json file
     json_file = r.json()
     search_results = json_file["results"]
+    print(search_results)
 
     formatted_search_results = []
 
