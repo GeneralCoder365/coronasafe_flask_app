@@ -1,1 +1,1 @@
-web: gunicorn  coronasafeapi:app  --log-file=-
+web: gunicorn  coronasafeapi:app
