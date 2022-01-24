@@ -3,11 +3,16 @@ from flask import request
 from flask_restful import Resource, Api, reqparse
 # getting the api key
 import os
+import sys
+import logging
+
 import coronasafe_v3_backend as cs_backend
 
 app = Flask(__name__)
 api = Api(app)
 
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 @app.route('/getPlaces', methods=["GET"])
 def search():
