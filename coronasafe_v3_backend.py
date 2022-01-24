@@ -1,5 +1,5 @@
 # https://github.com/GeneralCoder365/coronasafe
-
+import os
 from datetime import datetime as dt
 import requests, json
 import argparse
@@ -13,7 +13,7 @@ print(GITHUB_API_TOKEN)
 
 
 # Getting Google API Key
-import os
+
 # ! FOR LOCAL TESTING!
 # from dotenv import load_dotenv
 # from pathlib import Path
