@@ -1,3 +1,4 @@
 
 *.env
 *.env
+g_api_key.env
