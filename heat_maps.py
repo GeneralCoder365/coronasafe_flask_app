@@ -8,8 +8,8 @@ from pathlib import Path
 # CS_USERNAME = str(os.getenv('CS_USERNAME'))
 # CS_API_KEY = str(os.getenv('CS_API_KEY'))
 
-CS_USERNAME = str(os.environ['CS_USERNAME'])
-CS_API_KEY = str(os.environ['CS_API_KEY'])
+# CS_USERNAME = str(os.environ['CS_USERNAME'])
+# CS_API_KEY = str(os.environ['CS_API_KEY'])
 
 # print(CS_USERNAME)
 # print(CS_API_KEY)
@@ -23,7 +23,7 @@ from plotly.offline import plot
 import plotly.io as pio
 import pandas as pd
 import chart_studio
-chart_studio.tools.set_credentials_file(username=CS_USERNAME, api_key=CS_API_KEY)
+# chart_studio.tools.set_credentials_file(username=CS_USERNAME, api_key=CS_API_KEY)
 
 
 import ssl
@@ -95,6 +95,7 @@ def create_us_case_map(GITHUB_API_TOKEN):
     # fig.update_layout(margin=dict(l=0, r=0, t=0, b=0))
     
     # fig.write_html('maps/us_map.html')
+    # ! FOR OFFLINE TESTING
     # ! plot <-- plotly.offline.plot
     # plot(fig, filename = 'templates/us_map.html', auto_open=False)
 
@@ -143,7 +144,7 @@ def get_us_case_map(GITHUB_API_TOKEN):
 
 
 # makes state case graph
-def make_state_case_graph(state_input):
+def make_state_case_graph(state):
     ssl._create_default_https_context = ssl._create_unverified_context
     response1 = urllib.request.urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json')
 
@@ -158,7 +159,7 @@ def make_state_case_graph(state_input):
     df = pd.read_csv(url, converters={'fips': lambda x: str(x)})
 
     #Pick a state
-    df_Maryland = df[ df['state'] == state_input]
+    df_Maryland = df[ df['state'] == state]
     last_date = df['date'].max()
     df = df_Maryland[ df_Maryland['date'] == last_date]
 
@@ -173,12 +174,16 @@ def make_state_case_graph(state_input):
 
     #Added for zoom and to set rest of map to invisible. 
     fig.update_geos(fitbounds="locations", visible=False)
+    
+    title = "COVID-19 Cases From Each County in " + str(state)
 
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, title_text='COVID-19 Cases From Each County in Maryland')
-    plot(fig)
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, title_text=title)
+    
+    # plot(fig, filename = 'templates/state_map.html', auto_open=False)
+    plot(fig, filename = 'templates/state_map.html', auto_open=True)
 
-# tester code -> I think the format for the state is: Ex. "MD"
-# make_state_case_graph("MD")
+# tester code -> I think the format for the state is: Ex. "Maryland"
+make_state_case_graph("Maryland")
 
 
 
