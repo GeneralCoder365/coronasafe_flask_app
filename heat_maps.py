@@ -140,11 +140,95 @@ def get_us_case_map(GITHUB_API_TOKEN):
 # tester code
 # print(get_us_case_map())
 
+def get_us_state_population(state):
+    state = state.capitalize()
+    us_state_to_abbrev = {
+        "Alabama": "AL",
+        "Alaska": "AK",
+        "Arizona": "AZ",
+        "Arkansas": "AR",
+        "California": "CA",
+        "Colorado": "CO",
+        "Connecticut": "CT",
+        "Delaware": "DE",
+        "Florida": "FL",
+        "Georgia": "GA",
+        "Hawaii": "HI",
+        "Idaho": "ID",
+        "Illinois": "IL",
+        "Indiana": "IN",
+        "Iowa": "IA",
+        "Kansas": "KS",
+        "Kentucky": "KY",
+        "Louisiana": "LA",
+        "Maine": "ME",
+        "Maryland": "MD",
+        "Massachusetts": "MA",
+        "Michigan": "MI",
+        "Minnesota": "MN",
+        "Mississippi": "MS",
+        "Missouri": "MO",
+        "Montana": "MT",
+        "Nebraska": "NE",
+        "Nevada": "NV",
+        "New Hampshire": "NH",
+        "New Jersey": "NJ",
+        "New Mexico": "NM",
+        "New York": "NY",
+        "North Carolina": "NC",
+        "North Dakota": "ND",
+        "Ohio": "OH",
+        "Oklahoma": "OK",
+        "Oregon": "OR",
+        "Pennsylvania": "PA",
+        "Rhode Island": "RI",
+        "South Carolina": "SC",
+        "South Dakota": "SD",
+        "Tennessee": "TN",
+        "Texas": "TX",
+        "Utah": "UT",
+        "Vermont": "VT",
+        "Virginia": "VA",
+        "Washington": "WA",
+        "West Virginia": "WV",
+        "Wisconsin": "WI",
+        "Wyoming": "WY",
+        "District of Columbia": "DC",
+        "American Samoa": "AS",
+        "Guam": "GU",
+        "Northern Mariana Islands": "MP",
+        "Puerto Rico": "PR",
+        "United States Minor Outlying Islands": "UM",
+        "U.S. Virgin Islands": "VI",
+    }
+    state = us_state_to_abbrev[state]
+    # print(state)
+    
+    # https://github.com/JoshData/historical-state-population-csv/blob/primary/historical_state_population_by_year.csv
+    url = "https://raw.githubusercontent.com/JoshData/historical-state-population-csv/primary/historical_state_population_by_year.csv"
+    df = pd.read_csv(url, converters={'fips': lambda x: str(x)}, header=None)
+    # ! type(df) = <class 'pandas.core.frame.DataFrame'>
+    
+    # Columns: 0 (State Abbreviation), 1 (Year), 2 (Population)
+    
+    # print(df)
+    
+    df_state = df[df[0] == state]
+    most_recent_year = df_state[1].max()
+    state_population = int(df_state[df_state[1] == most_recent_year][2].values[0])
+    
+    # print(df_state)
+    # print(most_recent_year)
+    # print(state_population)
 
+    return state_population
 
+# print(get_us_state_population('California'))
 
-# makes state case graph
-def make_state_case_graph(state):
+# makes us state case graph
+def make_us_state_case_graph(state):
+    state = state.capitalize()
+    
     ssl._create_default_https_context = ssl._create_unverified_context
     response1 = urllib.request.urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json')
 
@@ -159,31 +243,51 @@ def make_state_case_graph(state):
     df = pd.read_csv(url, converters={'fips': lambda x: str(x)})
 
     #Pick a state
-    df_Maryland = df[ df['state'] == state]
+    df_state = df[ df['state'] == state]
     last_date = df['date'].max()
-    df = df_Maryland[ df_Maryland['date'] == last_date]
+    df = df_state[ df_state['date'] == last_date]
+    
+    max_cases = int(df['cases'].max())
+    # print("max_cases: ", max_cases)
 
-    print(df['cases'].sum())
-    print(df['deaths'].sum())
+    total_cases = int(df['cases'].sum())
+    total_deaths = int(df['deaths'].sum())
+    # print("total_cases: ", total_cases)
+    # print("total_deaths: ", total_deaths)
 
+    # state_population = get_us_state_population(state)
+    # print("state_population: ", state_population)
 
     fig = px.choropleth(df, geojson=counties, locations='fips', color='cases',
-                            color_continuous_scale="Viridis",
-                            range_color=(0, 20000)
+                            # color_continuous_scale="Viridis",
+                            # range_color=(0, 20000)
+                            # ! alternate colour scheme -> color_continuous_scale=px.colors.diverging.RdYlGn[::-1],
+                            # ! _r reverses the hot colour scheme
+                            color_continuous_scale="hot_r",
+                            range_color=(0, max_cases)
                             )
 
     #Added for zoom and to set rest of map to invisible. 
     fig.update_geos(fitbounds="locations", visible=False)
     
-    title = "COVID-19 Cases From Each County in " + str(state)
-
-    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, title_text=title)
+    # title = "COVID-19 Cases From Each County in " + str(state)
+    # fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, title_text=title)
     
-    # plot(fig, filename = 'templates/state_map.html', auto_open=False)
-    plot(fig, filename = 'templates/state_map.html', auto_open=True)
+    fig.update_layout(paper_bgcolor="#4E5D6C")
+    fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0}, geo=dict(bgcolor= '#4E5D6C',lakecolor='#4E5D6C'))
+    
+    plot_name = state.lower() + "_case_map"
+    
+    offline_file_name = "templates/" + plot_name + ".html" 
+    
+    # plot(fig, filename = offline_file_name, auto_open=False)
+    plot(fig, filename = offline_file_name, auto_open=True)
+    
+    
+    # ! plotly_url = py.plot(fig, filename=plot_name, auto_open=False, sharing='public')
 
 # tester code -> I think the format for the state is: Ex. "Maryland"
-make_state_case_graph("Maryland")
+make_us_state_case_graph("texas")
 
 
 
