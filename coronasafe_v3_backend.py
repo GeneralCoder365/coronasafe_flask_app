@@ -222,10 +222,18 @@ def get_us_case_map():
 # tester code
 # print(get_us_case_map())
 
-def make_state_case_graph(state_input):
-    # TO CHANGE!
-    print()
-    # heat_maps.make_state_case_graph(state_input)
+def create_us_state_case_map(state):
+    state = state.capitalize()
+    
+    return heat_maps.create_us_state_case_map(state, GITHUB_API_TOKEN)
 
 # tester code
-# make_state_case_graph("MD")
+# print(create_us_state_case_map("Maryland"))
+
+def get_us_state_case_map(state):
+    state = state.capitalize()
+    
+    return heat_maps.get_us_state_case_map(state, GITHUB_API_TOKEN)
+
+# tester code
+# print(get_us_case_map("Maryland"))
