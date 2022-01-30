@@ -494,7 +494,7 @@ def create_all_us_state_case_maps(GITHUB_API_TOKEN):
     for i in range(len(us_states)):
         html_embed_urls[us_states[i]] = create_us_state_case_map(us_states[i], GITHUB_API_TOKEN)
     # passes html_embed_urls in str format of dict
-    # html_embed_urls = json.dumps(html_embed_urls)
+    html_embed_urls = json.dumps(html_embed_urls)
         
     return html_embed_urls
 
