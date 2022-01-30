@@ -44,7 +44,7 @@ def get_us_case_map():
     us_case_map_html_embed_url = cs_backend.get_us_case_map()
     return {'data':us_case_map_html_embed_url}, 200
 
-@app.route('/getUSStateCaseMap', methods=["GET"])
+@app.route('/createUSStateCaseMap', methods=["GET"])
 def create_us_state_case_map():
     state = str(request.args.get('state')).capitalize()
     us_state_case_map_html_embed_url = cs_backend.create_us_state_case_map(state)
