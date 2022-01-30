@@ -345,6 +345,10 @@ def github_updater_us_state_case_map_embed_url(state, GITHUB_API_TOKEN, html_emb
         file_dict = json.loads(file_text)
         
         file_dict[state] = html_embed_url
+        
+        # sorts dictionary of state and embed urls alphabetically by state
+        file_dict = {key: value for key, value in sorted(file_dict.items())}
+        
         # ! converts dict to str of dict
         updated_file_content = json.dumps(file_dict)
         
