@@ -237,3 +237,9 @@ def get_us_state_case_map(state):
 
 # tester code
 # print(get_us_case_map("Maryland"))
+
+def create_all_us_state_case_maps():
+    return heat_maps.create_all_us_state_case_maps(GITHUB_API_TOKEN)
+
+# tester code
+# print(create_all_us_state_case_maps())

@@ -478,6 +478,29 @@ def get_us_state_case_map(state, GITHUB_API_TOKEN):
 # tester code
 # print(get_us_state_case_map("maryland", GITHUB_API_TOKEN))
 
+def create_all_us_state_case_maps(GITHUB_API_TOKEN):
+    us_states = ['Alabama','Alaska','Arizona','Arkansas','California','Colorado',
+                 'Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho',
+                 'Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana',
+                 'Maine','Maryland','Massachusetts','Michigan','Minnesota',
+                 'Mississippi','Missouri','Montana','Nebraska','Nevada',
+                 'New Hampshire','New Jersey','New Mexico','New York',
+                 'North Carolina','North Dakota','Ohio','Oklahoma','Oregon',
+                 'Pennsylvania','Rhode Island','South Carolina','South Dakota',
+                 'Tennessee','Texas','Utah','Vermont','Virginia','Washington',
+                 'West Virginia','Wisconsin','Wyoming']
+    html_embed_urls = {}
+    
+    for i in range(len(us_states)):
+        html_embed_urls[us_states[i]] = create_us_state_case_map(us_states[i], GITHUB_API_TOKEN)
+    # passes html_embed_urls in str format of dict
+    # html_embed_urls = json.dumps(html_embed_urls)
+        
+    return html_embed_urls
+
+# tester code
+# print(create_all_us_state_case_maps(GITHUB_API_TOKEN))
+
 # current_time = datetime.now().time()
 # current_time = current_time.strftime("%H:%M:%S")
 # print(current_time)
