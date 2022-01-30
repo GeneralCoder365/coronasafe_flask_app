@@ -57,7 +57,7 @@ def get_us_state_case_map():
     return {'data':us_state_case_map_html_embed_url}, 200
 
 @app.route('/createAllUSStateCaseMaps', methods=["GET"])
-def create_us_state_case_map():
+def create_all_us_state_case_maps():
     us_state_case_maps_html_embed_urls = cs_backend.create_all_us_state_case_maps()
     return {'data':us_state_case_maps_html_embed_urls}, 200
 
