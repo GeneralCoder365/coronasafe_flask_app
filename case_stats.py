@@ -5,10 +5,10 @@ import pycountry
 
 # REQUIREMENTS:
 # GLOBAL:
-    # COUNTRY CASES OVER LAST 30 DAYS/COUNTRY POPULATION --> Done
+    # COUNTRY CASES OVER LAST 30 DAYS / COUNTRY POPULATION --> Done
     # COUNTRY INFECTED OVER LAST 30 DAYS AS PERCENTAGE
-    # STATE CASES OVER LAST 30 DAYS/STATE POPULATION
-    # STATE INFECTED OVER LAST 30 DAYS AS PERCENTAGE
+    # STATE CASES OVER LAST 30 DAYS / STATE POPULATION (US ONLY) --> Done
+    # STATE INFECTED OVER LAST 30 DAYS AS PERCENTAGE (US ONLY) --> Done
 
 def get_country_population(country):    
     # https://github.com/datasets/population/blob/master/data/population.csv
@@ -209,11 +209,14 @@ def get_state_and_country_covid_cases(country, state):
 
 def get_covid_case_stats(country, state):
     country_population = get_country_population(country)
+    print("country_population: ", country_population)
     
     if (country == "United States"):
         state_population = get_us_state_population(state)
+        print("state_population: ", state_population)
     
     covid_case_data = get_state_and_country_covid_cases(country, state)
+    print("covid_case_data: ", covid_case_data)
     country_covid_cases = covid_case_data[0]
     state_covid_cases = covid_case_data[1]
     
