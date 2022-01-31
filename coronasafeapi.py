@@ -46,13 +46,13 @@ def get_us_case_map():
 
 @app.route('/createUSStateCaseMap', methods=["GET"])
 def create_us_state_case_map():
-    state = str(request.args.get('state')).capitalize()
+    state = str(request.args.get('state')).title()
     us_state_case_map_html_embed_url = cs_backend.create_us_state_case_map(state)
     return {'data':us_state_case_map_html_embed_url}, 200
 
 @app.route('/getUSStateCaseMap', methods=["GET"])
 def get_us_state_case_map():
-    state = str(request.args.get('state')).capitalize()
+    state = str(request.args.get('state')).title()
     us_state_case_map_html_embed_url = cs_backend.get_us_state_case_map(state)
     return {'data':us_state_case_map_html_embed_url}, 200
 

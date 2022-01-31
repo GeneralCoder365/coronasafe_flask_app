@@ -366,7 +366,7 @@ def create_us_state_case_map(state, GITHUB_API_TOKEN):
 # print(create_us_state_case_map("florida", GITHUB_API_TOKEN))
 
 def get_us_state_case_map(state, GITHUB_API_TOKEN):
-    state = state.capitalize()
+    state = state.title()
     
     github_object = Github(GITHUB_API_TOKEN)
     repository = github_object.get_user().get_repo('coronasafe_plotly_map_urls')
