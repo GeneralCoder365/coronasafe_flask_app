@@ -80,8 +80,7 @@ def create_us_case_map(GITHUB_API_TOKEN):
     df = df.groupby('state')['cases'].sum().to_frame()
     df = pd.merge(df, df_abbrev, left_on=df.index, right_on='State')
 
-    # fig = px.choropleth(df, locations=df['Abbreviation'], color=df['cases'],
-    fig = px.choropleth(df, locations=df['State'], color=df['cases'],
+    fig = px.choropleth(df, locations=df['Abbreviation'], color=df['cases'],
                         locationmode="USA-states",
                         # alternate colour scheme -> color_continuous_scale=px.colors.diverging.RdYlGn[::-1],
                         # _r reverses the hot colour scheme

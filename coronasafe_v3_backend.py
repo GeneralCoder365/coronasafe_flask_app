@@ -8,6 +8,7 @@ import local_density_calculator as local_density
 import surrounding_density_calculator as surrounding_density
 
 import heat_maps
+import case_stats
 GITHUB_API_TOKEN = str(os.environ['GITHUB_API_TOKEN'])
 # print(GITHUB_API_TOKEN)
 
@@ -243,3 +244,9 @@ def create_all_us_state_case_maps():
 
 # tester code
 # print(create_all_us_state_case_maps())
+
+def get_covid_case_stats(country, state):
+    return case_stats.get_covid_case_stats(country, state)
+
+# tester code
+# print(get_covid_case_stats("United States", "Maryland"))

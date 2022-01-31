@@ -61,6 +61,13 @@ def create_all_us_state_case_maps():
     us_state_case_maps_html_embed_urls = cs_backend.create_all_us_state_case_maps()
     return {'data':us_state_case_maps_html_embed_urls}, 200
 
+@app.route('/getCOVIDCaseStats', methods=["GET"])
+def get_covid_case_stats():
+    country = str(request.args.get('country')).title()
+    state = str(request.args.get('state')).title()
+    covid_stats = cs_backend.get_covid_case_stats(country, state)
+    return {'data':covid_stats}, 200
+
 app.debug = True
 
 if __name__ == '__main__':
