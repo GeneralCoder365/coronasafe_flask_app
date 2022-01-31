@@ -205,7 +205,7 @@ def get_us_state_fips_code(state):
 # print(get_us_state_fips_code('California'))
 
 def generate_custom_state_only_geojson_file(state):
-    state = state.capitalize()
+    state = state.title()
     state_fips_code = get_us_state_fips_code(state)
     
     with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
@@ -235,7 +235,7 @@ def generate_custom_state_only_geojson_file(state):
 # print(generate_custom_state_only_geojson_file('maryland'))
 
 def github_updater_us_state_case_map_embed_url(state, GITHUB_API_TOKEN, html_embed_url):
-    state = state.capitalize()
+    state = state.title()
     
     github_object = Github(GITHUB_API_TOKEN)
     repository = github_object.get_user().get_repo('coronasafe_plotly_map_urls')
@@ -279,7 +279,7 @@ def github_updater_us_state_case_map_embed_url(state, GITHUB_API_TOKEN, html_emb
 
 # makes us state case graph
 def create_us_state_case_map(state, GITHUB_API_TOKEN):
-    state = state.capitalize()
+    state = state.title()
     
     ssl._create_default_https_context = ssl._create_unverified_context
     response1 = urllib.request.urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json')
