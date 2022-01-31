@@ -209,11 +209,11 @@ def get_state_and_country_covid_cases(country, state):
 
 def get_covid_case_stats(country, state):
     country_population = get_country_population(country)
-    print("country_population: ", country_population)
+    # print("country_population: ", country_population)
     
     if (country == "United States"):
         state_population = get_us_state_population(state)
-        print("state_population: ", state_population)
+        # print("state_population: ", state_population)
     
     covid_case_data = get_state_and_country_covid_cases(country, state)
     print("covid_case_data: ", covid_case_data)
