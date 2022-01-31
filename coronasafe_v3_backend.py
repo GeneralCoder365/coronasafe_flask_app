@@ -16,8 +16,7 @@ import case_stats
 # dotenv_path = Path('github_api_access_token.env')
 # load_dotenv(dotenv_path=dotenv_path)
 # GITHUB_API_TOKEN = str(os.getenv('GITHUB_API_TOKEN'))
-
-# Getting Google API Key
+# # Getting Google API Key
 # dotenv_path = Path('g_api_key.env')
 # load_dotenv(dotenv_path=dotenv_path)
 # G_API_KEY = str(os.getenv('G_API_KEY'))

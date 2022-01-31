@@ -140,7 +140,7 @@ def get_us_case_map(GITHUB_API_TOKEN):
 # print(get_us_case_map())
 
 def get_us_state_fips_code(state):
-    state = state.capitalize()
+    state = state.title()
     us_state_to_fips_code = {
         "Alabama": "01",
         "Alaska": "02",
@@ -221,15 +221,22 @@ def generate_custom_state_only_geojson_file(state):
         raw_geojson_county_data = raw_geojson[i]
         raw_geojson_state_fips_code = raw_geojson_county_data["properties"]["STATE"]
         
+        raw_geojson_county_data["properties"]["NAME"] = raw_geojson_county_data["properties"]["NAME"].lower()
+        
         if (raw_geojson_state_fips_code == state_fips_code):
             # print(raw_geojson_county_data["properties"]["NAME"])
             if (raw_geojson_county_data["properties"]["NAME"] in county_names_in_geojson):
                 # ! TEMPORARY FIX TO HAVING BALTIMORE AND BALTIMORE CITY IN DF, BUT HAVING 2 BALTIMORES IN SAME STATE IN GEOJSON
                 raw_geojson_county_data["properties"]["NAME"] = str(raw_geojson_county_data["properties"]["NAME"]) + " city"
+            elif (raw_geojson_county_data["properties"]["NAME"] == state.lower()):
+                # ! TEMPORARY FIX TO HAVING NEW YORK CITY IN DF, BUT HAVING NEW YORK COUNTY IN NEW YORK STATE IN GEOJSON
+                raw_geojson_county_data["properties"]["NAME"] = str(raw_geojson_county_data["properties"]["NAME"]) + " city"
             
             county_names_in_geojson.append(str(raw_geojson_county_data["properties"]["NAME"]))
+            # print(county_names_in_geojson)
             custom_geojson["features"].append(raw_geojson_county_data)
             # print(raw_geojson[i]["properties"]["NAME"])
+    # print(county_names_in_geojson)
     
     return custom_geojson
 # print(generate_custom_state_only_geojson_file('maryland'))
@@ -280,18 +287,6 @@ def github_updater_us_state_case_map_embed_url(state, GITHUB_API_TOKEN, html_emb
 # makes us state case graph
 def create_us_state_case_map(state, GITHUB_API_TOKEN):
     state = state.title()
-    
-    ssl._create_default_https_context = ssl._create_unverified_context
-    response1 = urllib.request.urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json')
-
-    # with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
-    #     # counties = json.load(response)
-    #     geojson = json.loads(response.read())
-    # for i in range(len(geojson['features'])):
-    #     if (geojson["features"][i]["properties"]["STATE"] == "24"):
-    #         print(geojson["features"][i]["properties"]["NAME"])
-    # print(geojson)
-    # counties["features"][0]
 
     geojson = generate_custom_state_only_geojson_file(state)
     
@@ -308,12 +303,24 @@ def create_us_state_case_map(state, GITHUB_API_TOKEN):
     # print(df_state[df_state['county'] == 'Allegany'])
     last_date = df['date'].max()
     df = df_state[df_state['date'] == last_date]
-    counties_in_state = df['county']
+    
+    # counties_in_state = df['county']
+    counties_in_state = []
+    # print(df)
+    # .lower() to all county names in state df to match with custom_geojson county format
+    for i in df.index:
+        # print(df[df.index == i])
+        # print(df[df.index == i]['county'])
+        df_county = str(df.at[i,'county']).lower()
+        df.at[i,'county'] = df_county
+        counties_in_state.append(df_county)
+    
     # print(counties_in_state)
     cases_in_state = df['cases']
     
     max_cases = int(df['cases'].max())
     # print("max_cases: ", max_cases)
+    # print(df[df['cases'] == max_cases])
 
     total_cases = int(df['cases'].sum())
     total_deaths = int(df['deaths'].sum())
