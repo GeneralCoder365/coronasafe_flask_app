@@ -32,17 +32,22 @@ import json
 from datetime import datetime, time
 
 from github import Github, UnknownObjectException
+
+# ! FOR LOCAL TESTING!
+# import os
+# from dotenv import load_dotenv
+# from pathlib import Path
 # dotenv_path = Path('github_api_access_token.env')
 # load_dotenv(dotenv_path=dotenv_path)
 # GITHUB_API_TOKEN = str(os.getenv('GITHUB_API_TOKEN'))
 # print(GITHUB_API_TOKEN)
 
 # github_object = Github(GITHUB_API_TOKEN)
-# repository = github_object.get_user().get_repo('coronasafe_plotly_map_urls')
+# repository = github_object.get_user().get_repo('coronasafe_data_storage')
 
 def github_updater_us_case_map_embed_url(GITHUB_API_TOKEN, html_embed_url):
     github_object = Github(GITHUB_API_TOKEN)
-    repository = github_object.get_user().get_repo('coronasafe_plotly_map_urls')
+    repository = github_object.get_user().get_repo('coronasafe_data_storage')
     
     # path in the repository
     filename = 'us_case_map_url.txt'
@@ -115,7 +120,7 @@ def create_us_case_map(GITHUB_API_TOKEN):
 
 def get_us_case_map(GITHUB_API_TOKEN):
     github_object = Github(GITHUB_API_TOKEN)
-    repository = github_object.get_user().get_repo('coronasafe_plotly_map_urls')
+    repository = github_object.get_user().get_repo('coronasafe_data_storage')
     
     # path in the repository
     filename = 'us_case_map_url.txt'
@@ -245,7 +250,7 @@ def github_updater_us_state_case_map_embed_url(state, GITHUB_API_TOKEN, html_emb
     state = state.title()
     
     github_object = Github(GITHUB_API_TOKEN)
-    repository = github_object.get_user().get_repo('coronasafe_plotly_map_urls')
+    repository = github_object.get_user().get_repo('coronasafe_data_storage')
     
     # path in the repository
     filename = 'us_state_case_map_urls.json'
@@ -376,7 +381,7 @@ def get_us_state_case_map(state, GITHUB_API_TOKEN):
     state = state.title()
     
     github_object = Github(GITHUB_API_TOKEN)
-    repository = github_object.get_user().get_repo('coronasafe_plotly_map_urls')
+    repository = github_object.get_user().get_repo('coronasafe_data_storage')
     
     # path in the repository
     filename = 'us_state_case_map_urls.json'
