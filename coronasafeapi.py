@@ -67,7 +67,6 @@ def get_covid_case_stats():
     country = str(request.args.get('country')).title()
     state = str(request.args.get('state')).title()
     covid_stats = cs_backend.get_covid_case_stats(country, state)
-    garbage_collect()
     return {'data':covid_stats}, 200
 
 def garbage_collect():
@@ -75,7 +74,23 @@ def garbage_collect():
     gc.set_debug(gc.DEBUG_LEAK)
     gc.collect()
 
-garbage_collect()
+@app.before_request 
+def before_request_callback():
+    garbage_collect()
+    # method = request.method 
+    # path = request.path 
+         
+    # if path == "/" and method == "POST": 
+    #     myfunction()
+ 
+@app.after_request 
+def after_request_callback(response): 
+    garbage_collect()
+    return response
+    # response_value = response.get_data() 
+    # print(response_value)
+ 
+    # return response
 
 app.debug = True
 
