@@ -5,6 +5,7 @@ from flask_restful import Resource, Api, reqparse
 # import os
 import sys
 import logging
+import gc
 
 import coronasafe_v3_backend as cs_backend
 
@@ -68,8 +69,13 @@ def get_covid_case_stats():
     covid_stats = cs_backend.get_covid_case_stats(country, state)
     return {'data':covid_stats}, 200
 
+def garbage_collect():
+    gc.collect()
+
+garbage_collect()
+print("boobiesBOI")
+
 app.debug = True
 
 if __name__ == '__main__':
     app.run()
-    print("boobiesAFIAMS")
