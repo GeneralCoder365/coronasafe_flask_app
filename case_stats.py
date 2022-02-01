@@ -151,13 +151,35 @@ def get_state_and_country_covid_cases(country, state):
     
     # # Load CSV data directly from the URL with pandas, the options are needed to prevent
     # reading of records with key "NA" (Namibia) as NaN
-    df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', keep_default_na=False, na_values=[""])
+    
+    # columns in csv file: date (0), location_key (1), new_confirmed (2), new_deceased (3), new_recovered (4), new_tested (5), cumulative_confirmed (6), cumulative_deceased (7), cumulative_recovered (8), cumulative_tested (9)
+    columns_to_track = ['date', 'location_key', 'new_confirmed'] # ! cut down file size from 1.9 GB to 1.4 GB
+    dtypes = {'date': 'category', 'location_key': 'category', 'new_confirmed': 'float64'} # used to specify column data types ('category' is used when:
+            # Imagine a gender column that only says "FEMALE", "MALE", and "NON-BINARY" over and over again—that’s a lot of memory being used to store the same three strings.
+            # A more compact representation for data with only a limited number of values is a custom dtype called Categorical, whose memory usage is tied to the number of different 
+            # values.)
+            # 'date' column has a lot of repeated dates of type str, and 'location_key' column has a lot of repeated location_keys of type str., so setting to 'categorical' 
+            # reduces size
+    # ! cut down file size from 1.4 GB to 119.4 MB
+    
+    df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
+                     keep_default_na = False, na_values = [""], usecols = columns_to_track,
+                     dtype = dtypes)
     # print(df[df['key'] == 'US'])
     # print(df[df.location_key == 'US_CA'])
     # print(type(df.date.max()))
     
+    # ! used to track memory usage of storing df: 119.4 MB
+    # print("original_df: ", df.info(memory_usage='deep'))
+    
     df_country = df[df.location_key == country_key]
-    country_last_date = df_country.date.max()
+    # ! used to track memory usage of storing df_country: 1.9 MB
+    # print("df_country: ", df_country.info(memory_usage='deep'))
+    
+    # declares that date column in df_country, which is Categorical data type, to be ordered, so that min and max operations can be performed on it
+    country_last_date = df_country.date.cat.as_ordered().max()
+    # print("country_last_date: ", country_last_date)
+
     country_last_date_date = (datetime.strptime(country_last_date, '%Y-%m-%d')).date()
     country_cases_start_date = country_last_date_date + date_range_timedelta
     
@@ -182,7 +204,8 @@ def get_state_and_country_covid_cases(country, state):
     
     
     df_state = df[df.location_key == state_key]
-    state_last_date = df_state.date.max()
+    # declares that date column in df_state, which is Categorical data type, to be ordered, so that min and max operations can be performed on it
+    state_last_date = df_state.date.cat.as_ordered().max()
     state_last_date_date = (datetime.strptime(state_last_date, '%Y-%m-%d')).date()
     state_cases_start_date = state_last_date_date + date_range_timedelta
     
@@ -216,7 +239,7 @@ def get_covid_case_stats(country, state):
         # print("state_population: ", state_population)
     
     covid_case_data = get_state_and_country_covid_cases(country, state)
-    print("covid_case_data: ", covid_case_data)
+    # print("covid_case_data: ", covid_case_data)
     country_covid_cases = covid_case_data[0]
     state_covid_cases = covid_case_data[1]
     

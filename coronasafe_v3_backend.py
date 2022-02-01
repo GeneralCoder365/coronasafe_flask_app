@@ -226,7 +226,7 @@ def get_us_case_map():
 # print(get_us_case_map())
 
 def create_us_state_case_map(state):
-    state = state.capitalize()
+    state = state.title()
     
     return heat_maps.create_us_state_case_map(state, GITHUB_API_TOKEN)
 
@@ -234,7 +234,7 @@ def create_us_state_case_map(state):
 # print(create_us_state_case_map("Maryland"))
 
 def get_us_state_case_map(state):
-    state = state.capitalize()
+    state = state.title()
     
     return heat_maps.get_us_state_case_map(state, GITHUB_API_TOKEN)
 
