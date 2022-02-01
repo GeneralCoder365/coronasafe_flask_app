@@ -67,13 +67,15 @@ def get_covid_case_stats():
     country = str(request.args.get('country')).title()
     state = str(request.args.get('state')).title()
     covid_stats = cs_backend.get_covid_case_stats(country, state)
+    garbage_collect()
     return {'data':covid_stats}, 200
 
 def garbage_collect():
+    print("boobiesBOI")
+    gc.set_debug(gc.DEBUG_LEAK)
     gc.collect()
 
 garbage_collect()
-print("boobiesBOI")
 
 app.debug = True
 
