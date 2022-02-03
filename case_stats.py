@@ -236,7 +236,7 @@ def get_state_and_country_covid_cases(country, state):
     
     return [country_cases, state_cases]
 
-print(get_state_and_country_covid_cases("United States", "California"))
+# print(get_state_and_country_covid_cases("United States", "California"))
 
 def get_covid_case_stats(country, state):
     country_population = get_country_population(country)
