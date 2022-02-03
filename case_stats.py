@@ -161,6 +161,7 @@ def get_state_and_country_covid_cases(country, state):
             # 'date' column has a lot of repeated dates of type str, and 'location_key' column has a lot of repeated location_keys of type str., so setting to 'categorical' 
             # reduces size
     # ! cut down file size from 1.4 GB to 119.4 MB
+    # ! CURRENT MEMORY OVERFLOW POINT!!!
     df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
                      keep_default_na = False, na_values = [""], usecols = columns_to_track,
                      dtype = dtypes)
@@ -171,7 +172,7 @@ def get_state_and_country_covid_cases(country, state):
     #                  dtype = dtypes).stack()
     # print(df[df['key'] == 'US'])
     # print(df[df.location_key == 'US_CA'])
-    print(type(df.date.max()))
+    # print(type(df.date.max()))
     
     # ! used to track memory usage of storing df: 119.8 MB
     # print("original_df: ", df.info(memory_usage='deep'))

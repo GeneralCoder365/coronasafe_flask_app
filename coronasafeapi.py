@@ -89,6 +89,7 @@ def get_covid_case_stats():
     # queue is passed as a parameter because cs_backend.get_covid_case_stats() "puts" the data into the queue
     process = multiprocessing.Process(target=cs_backend.get_covid_case_stats, args=(country, state, queue))
     # starts the subprocess and .join() waits for it to finish before letting anything else start
+    print("preboob")
     process.start()
     process.join() # The join() method, when used with threading or multiprocessing, is not related to str.join() - it's not actually concatenating anything together. Rather, it just means "wait for this [thread/process] to complete"
     print("boob")
