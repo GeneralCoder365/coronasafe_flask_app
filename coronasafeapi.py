@@ -7,7 +7,7 @@ import sys
 import logging
 import gc
 import multiprocessing
-from memory_profiler import profile
+from memory_profiler import profile # used for detailed breakdown of memory usage
 
 import coronasafe_v3_backend as cs_backend
 
@@ -29,7 +29,7 @@ app.logger.setLevel(logging.ERROR)
 
 
 @app.route('/getPlaces', methods=["GET"])
-@profile
+@profile # marks function to be tracked for memory usage
 def search():
     search_query = request.args.get('query')
     # print("search_query: ", search_query)
@@ -83,14 +83,22 @@ def get_covid_case_stats():
     country = str(request.args.get('country')).title()
     state = str(request.args.get('state')).title()
     covid_stats = []
+    # creates a processing queue
     queue = multiprocessing.Queue()
+    # creates the subprocess for getCOVIDStats and passes in the necessary arguments
+    # queue is passed as a parameter because cs_backend.get_covid_case_stats() "puts" the data into the queue
     process = multiprocessing.Process(target=cs_backend.get_covid_case_stats, args=(country, state, queue))
+    # starts the subprocess and .join() waits for it to finish before letting anything else start
     process.start()
     process.join() # The join() method, when used with threading or multiprocessing, is not related to str.join() - it's not actually concatenating anything together. Rather, it just means "wait for this [thread/process] to complete"
     print("boob")
+    # covid_stats variable gets data from queue
     covid_stats = queue.get()
+    # ends process to clear process-related memory and prevent memory leaks
     process.terminate()
+    # for debugging
     print(process.is_alive())
+    # closes the queue to avoid overlapping queues and prevent memory leaks
     queue.close()
     # covid_stats = cs_backend.get_covid_case_stats(country, state)
     return {'data':covid_stats}, 200
