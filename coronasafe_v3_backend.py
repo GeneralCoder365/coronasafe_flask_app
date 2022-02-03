@@ -247,8 +247,11 @@ def create_all_us_state_case_maps():
 # tester code
 # print(create_all_us_state_case_maps())
 
-def get_covid_case_stats(country, state):
-    return case_stats.get_covid_case_stats(country, state)
+def get_covid_case_stats(country, state, queue):
+    # print("country: ", country)
+    # print("state: ", state)
+    # return case_stats.get_covid_case_stats(country, state)
+    queue.put(case_stats.get_covid_case_stats(country, state))
 
 # tester code
 # print(get_covid_case_stats("United States", "Maryland"))
