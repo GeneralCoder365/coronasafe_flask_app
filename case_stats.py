@@ -171,7 +171,7 @@ def get_state_and_country_covid_cases(country, state):
     #                  dtype = dtypes).stack()
     # print(df[df['key'] == 'US'])
     # print(df[df.location_key == 'US_CA'])
-    # print(type(df.date.max()))
+    print(type(df.date.max()))
     
     # ! used to track memory usage of storing df: 119.8 MB
     # print("original_df: ", df.info(memory_usage='deep'))
