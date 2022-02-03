@@ -103,7 +103,7 @@ def before_request_callback():
          
     # if path == "/" and method == "POST": 
     #     myfunction()
- 
+
 @app.after_request 
 def after_request_callback(response): 
     garbage_collect()

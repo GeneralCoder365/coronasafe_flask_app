@@ -161,20 +161,28 @@ def get_state_and_country_covid_cases(country, state):
             # 'date' column has a lot of repeated dates of type str, and 'location_key' column has a lot of repeated location_keys of type str., so setting to 'categorical' 
             # reduces size
     # ! cut down file size from 1.4 GB to 119.4 MB
-    
     df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
                      keep_default_na = False, na_values = [""], usecols = columns_to_track,
                      dtype = dtypes)
+    
+    # ! potentially use stack format to reduce size but then everything is a giant series and harder to work with
+    # df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
+    #                  keep_default_na = False, na_values = [""], usecols = columns_to_track,
+    #                  dtype = dtypes).stack()
     # print(df[df['key'] == 'US'])
     # print(df[df.location_key == 'US_CA'])
     # print(type(df.date.max()))
     
     # ! used to track memory usage of storing df: 119.4 MB
     # print("original_df: ", df.info(memory_usage='deep'))
+    # ! stack memory tracker
+    # print("original_df: ", df.memory_usage(deep=True))
     
     df_country = df[df.location_key == country_key]
     # ! used to track memory usage of storing df_country: 1.9 MB
     # print("df_country: ", df_country.info(memory_usage='deep'))
+    # ! stack memory tracker
+    # print("df_country: ", df_country.memory_usage())
     
     # declares that date column in df_country, which is Categorical data type, to be ordered, so that min and max operations can be performed on it
     country_last_date = df_country.date.cat.as_ordered().max()
@@ -228,7 +236,7 @@ def get_state_and_country_covid_cases(country, state):
     
     return [country_cases, state_cases]
 
-# print(get_state_and_country_covid_cases("United States", "California"))
+print(get_state_and_country_covid_cases("United States", "California"))
 
 def get_covid_case_stats(country, state):
     country_population = get_country_population(country)
