@@ -165,16 +165,16 @@ def get_state_and_country_covid_cases(country, state):
             # reduces size
     # ! cut down file size from 1.4 GB to 119.4 MB
     # ! CURRENT MEMORY OVERFLOW POINT!!!
-    df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
-                     keep_default_na = False, na_values = [""], usecols = columns_to_track,
-                     dtype = dtypes)
+    # df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
+    #                  keep_default_na = False, na_values = [""], usecols = columns_to_track,
+    #                  dtype = dtypes)
     # print(df)
     
     # ! potentially use stack format to reduce size but then everything is a giant series and harder to work with
-    # df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
-                    #  keep_default_na = False, na_values = [""], usecols = columns_to_track,
-                    #  dtype = dtypes).stack()
-    # print(df)
+    df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
+                     keep_default_na = False, na_values = [""], usecols = columns_to_track,
+                     dtype = dtypes).stack()
+    print(df)
     # print(df[df['key'] == 'US'])
     # print(df[df.location_key == 'US_CA'])
     # print(type(df.date.max()))
@@ -184,7 +184,21 @@ def get_state_and_country_covid_cases(country, state):
     # ! stack memory tracker
     # print("original_df: ", df.memory_usage(deep=True))
     
-    df_country = df[df.location_key == country_key]
+    df_country = pd.Series([])
+    found_country = 0
+    for i in range(len(df)):
+        # print(i)
+        # print(str(df[i]['location_key']))
+        if ((found_country == True) and (str(df[i]['location_key']) != country_key)):
+            break
+        elif (str(df[i]['location_key']) == country_key):
+            print(df[i])
+            df_country.add(df[i], fill_value=('category', 'category', 'float64'))
+            found_country = True
+        
+    print(df_country)
+    
+    # df_country = df[df.location_key == country_key]
     # ! used to track memory usage of storing df_country: 1.9 MB
     # print("df_country: ", df_country.info(memory_usage='deep'))
     # ! stack memory tracker
