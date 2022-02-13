@@ -29,7 +29,7 @@ app.logger.setLevel(logging.ERROR)
 
 
 @app.route('/getPlaces', methods=["GET"])
-@profile # marks function to be tracked for memory usage
+# @profile # marks function to be tracked for memory usage
 def search():
     search_query = request.args.get('query')
     # print("search_query: ", search_query)
@@ -77,7 +77,7 @@ def create_all_us_state_case_maps():
 
 
 @app.route('/getCOVIDCaseStats', methods=["GET"])
-@profile
+# @profile
 def get_covid_case_stats():
     garbage_collect()
     country = str(request.args.get('country')).title()
