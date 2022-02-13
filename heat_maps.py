@@ -1,15 +1,15 @@
 # Getting Chart Studio/Plotly credentials:
 import os
-from dotenv import load_dotenv
-from pathlib import Path
-# ! FOR LOCAL TESTING!
-dotenv_path = Path('plotly_chart_studio_credentials.env')
-load_dotenv(dotenv_path=dotenv_path)
-CS_USERNAME = str(os.getenv('CS_USERNAME'))
-CS_API_KEY = str(os.getenv('CS_API_KEY'))
+# from dotenv import load_dotenv
+# from pathlib import Path
+# # ! FOR LOCAL TESTING!
+# dotenv_path = Path('plotly_chart_studio_credentials.env')
+# load_dotenv(dotenv_path=dotenv_path)
+# CS_USERNAME = str(os.getenv('CS_USERNAME'))
+# CS_API_KEY = str(os.getenv('CS_API_KEY'))
 
-# CS_USERNAME = str(os.environ['CS_USERNAME'])
-# CS_API_KEY = str(os.environ['CS_API_KEY'])
+CS_USERNAME = str(os.environ['CS_USERNAME'])
+CS_API_KEY = str(os.environ['CS_API_KEY'])
 
 # print(CS_USERNAME)
 # print(CS_API_KEY)

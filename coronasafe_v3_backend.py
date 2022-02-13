@@ -11,21 +11,21 @@ import heat_maps
 import case_stats
 
 # ! FOR LOCAL TESTING!
-from dotenv import load_dotenv
-from pathlib import Path
-dotenv_path = Path('github_api_access_token.env')
-load_dotenv(dotenv_path=dotenv_path)
-GITHUB_API_TOKEN = str(os.getenv('GITHUB_API_TOKEN'))
+# from dotenv import load_dotenv
+# from pathlib import Path
+# dotenv_path = Path('github_api_access_token.env')
+# load_dotenv(dotenv_path=dotenv_path)
+# GITHUB_API_TOKEN = str(os.getenv('GITHUB_API_TOKEN'))
 # # Getting Google API Key
-dotenv_path = Path('g_api_key.env')
-load_dotenv(dotenv_path=dotenv_path)
-G_API_KEY = str(os.getenv('G_API_KEY'))
+# dotenv_path = Path('g_api_key.env')
+# load_dotenv(dotenv_path=dotenv_path)
+# G_API_KEY = str(os.getenv('G_API_KEY'))
 
 
 
-# GITHUB_API_TOKEN = str(os.environ['GITHUB_API_TOKEN'])
+GITHUB_API_TOKEN = str(os.environ['GITHUB_API_TOKEN'])
 # print(GITHUB_API_TOKEN)
-# G_API_KEY = str(os.environ['G_API_KEY'])
+G_API_KEY = str(os.environ['G_API_KEY'])
 # print(G_API_KEY)
 
 

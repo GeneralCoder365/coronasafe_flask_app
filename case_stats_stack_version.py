@@ -173,8 +173,8 @@ def get_state_and_country_covid_cases(country, state):
     # ! potentially use stack format to reduce size but then everything is a giant series and harder to work with
     df = pd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
                      keep_default_na = False, na_values = [""], usecols = columns_to_track,
-                     dtype = dtypes).stack()
-    print(df)
+                     dtype = dtypes).set_index('location_key').stack(dropna=True) # drops rows with completely NaN values
+    # print(df)
     # print(df[df['key'] == 'US'])
     # print(df[df.location_key == 'US_CA'])
     # print(type(df.date.max()))
@@ -184,19 +184,27 @@ def get_state_and_country_covid_cases(country, state):
     # ! stack memory tracker
     # print("original_df: ", df.memory_usage(deep=True))
     
-    df_country = pd.Series([])
-    found_country = 0
-    for i in range(len(df)):
-        # print(i)
-        # print(str(df[i]['location_key']))
-        if ((found_country == True) and (str(df[i]['location_key']) != country_key)):
-            break
-        elif (str(df[i]['location_key']) == country_key):
-            print(df[i])
-            df_country.add(df[i], fill_value=('category', 'category', 'float64'))
-            found_country = True
-        
-    print(df_country)
+    # df_country = pd.Series() # , dtype = ()) # ('category', 'category', 'float64'))
+    found_country = False
+    # df_country = df.ix['some name'][df.ix['some name']==31].index.tolist()
+    # df_country = df.ix['location_key'][df.ix['location_key']==country_key].index.tolist()
+    df_country = df[country_key]
+    # for i in range(len(df)):
+    #     # print(df[i])
+    #     # print(str(df[i]['location_key']))
+    #     if ((found_country == True) and (str(df[i]['location_key']) != country_key)):
+    #         break
+    #     elif (str(df[i]['location_key']) == country_key):
+    #         print(df[i])
+    #         found_country = True
+    #         df_country.add(df[i], fill_value = ('category', 'category', 'float64'))
+    # print("df_country: ", df_country)
+    # print("df_country_dates", df_country['date'].values)
+    df_country = pd.DataFrame(data = {'date': df_country['date'].values, 'new_confirmed': df_country['new_confirmed'].values})
+    # ! not actually converting date column to categorical because there are no repeated dates inside just one country's data, but just in name so that
+    # ! max can be found using categorical syntax, which I think takes less memory?
+    df_country['date'] = df_country['date'].astype('category')
+    df_country['new_confirmed'] = df_country['new_confirmed'].astype('float64')
     
     # df_country = df[df.location_key == country_key]
     # ! used to track memory usage of storing df_country: 1.9 MB
@@ -226,12 +234,21 @@ def get_state_and_country_covid_cases(country, state):
         current_country_cases_date += timedelta(days=1)
     
     country_cases = round(country_cases)
-    # print(country_cases)
+    print("country_cases: ", country_cases)
     
     # print(int(round(float(df_country[df_country.date == country_last_date]["new_confirmed"].values[0]))))
     
     
-    df_state = df[df.location_key == state_key]
+    df_state = df[state_key]
+    # print("df_state: ", df_state)
+    # print("df_state_dates", df_state['date'].values)
+    df_state = pd.DataFrame(data = {'date': df_state['date'].values, 'new_confirmed': df_state['new_confirmed'].values})
+    # ! not actually converting date column to categorical because there are no repeated dates inside just one state's data, but just in name so that
+    # ! max can be found using categorical syntax, which I think takes less memory?
+    df_state['date'] = df_state['date'].astype('category')
+    df_state['new_confirmed'] = df_state['new_confirmed'].astype('float64')
+    
+    
     # declares that date column in df_state, which is Categorical data type, to be ordered, so that min and max operations can be performed on it
     state_last_date = df_state.date.cat.as_ordered().max()
     state_last_date_date = (datetime.strptime(state_last_date, '%Y-%m-%d')).date()
@@ -252,7 +269,7 @@ def get_state_and_country_covid_cases(country, state):
         current_state_cases_date += timedelta(days=1)
     
     state_cases = round(state_cases)
-    # print(state_cases)
+    print("state_cases: ", state_cases)
     
     return [country_cases, state_cases]
 

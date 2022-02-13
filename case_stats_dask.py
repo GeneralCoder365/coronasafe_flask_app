@@ -170,7 +170,7 @@ def get_state_and_country_covid_cases(country, state):
     df = dd.read_csv('https://storage.googleapis.com/covid19-open-data/v3/epidemiology.csv', 
                      keep_default_na = False, na_values = [""], usecols = columns_to_track,
                      dtype = dtypes)
-    # print(df) # currently 6 partitions
+    print(df) # currently 6 partitions
     # print(df.map_partitions(type).compute())
     
     # ! potentially use stack format to reduce size but then everything is a giant series and harder to work with
@@ -217,7 +217,7 @@ def get_state_and_country_covid_cases(country, state):
         current_country_cases_date += timedelta(days=1)
     
     country_cases = round(country_cases)
-    # print("country_cases: ", country_cases)
+    print("country_cases: ", country_cases)
     
     # print(int(round(float(df_country[df_country.date == country_last_date]["new_confirmed"].values[0]))))
     
@@ -244,11 +244,11 @@ def get_state_and_country_covid_cases(country, state):
         current_state_cases_date += timedelta(days=1)
     
     state_cases = round(state_cases)
-    # print("state_cases: ", state_cases)
+    print("state_cases: ", state_cases)
     
     return [country_cases, state_cases]
 
-# print(get_state_and_country_covid_cases("United States", "California"))
+print(get_state_and_country_covid_cases("United States", "California"))
 
 def get_covid_case_stats(country, state):
     country_population = get_country_population(country)
