@@ -47,6 +47,13 @@ def getNumbers():
 # (Westfield Montgomery) 7101 Democracy Blvd, Bethesda, MD 20852, United States
 # (Empire State Building) 20 W 34th St, New York, NY 10001
 
+@app.route('/getRevGeo', methods=["GET"])
+def getRevGeo():
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    data = cs_backend.rev_geocoder(lat, lng)
+    return {'data':data}, 200
+
 
 @app.route('/createUSCaseMap', methods=["GET"])
 def create_us_case_map():

@@ -7,6 +7,7 @@ import argparse
 import local_density_calculator as local_density
 import surrounding_density_calculator as surrounding_density
 
+import reverse_geocoding
 import heat_maps
 import case_stats
 
@@ -150,6 +151,9 @@ def get_lat_long(google_api_key, raw_address):
         # Pass: https://www.google.com/search?q=pass+python+function&rlz=1C1SQJL_enUS806US806&oq=pass+python&aqs=chrome.2.69i57j0l6j69i65.2918j0j1&sourceid=chrome&ie=UTF-8 
         pass
         return [None, None]
+
+def rev_geocoder(lat, lng, google_api_key = G_API_KEY):
+    return reverse_geocoding.reverse_geocoder(google_api_key, lat, lng)
 
 # from timezonefinder import TimezoneFinder
 def master_density_calculator(raw_address: str, g_api_key) -> int:
