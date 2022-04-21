@@ -1,5 +1,7 @@
-from tempfile import TemporaryFile
+# from tempfile import TemporaryFile
 import requests, json
+
+# ! https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding#reverse-requests
 
 # import os
 # from dotenv import load_dotenv
