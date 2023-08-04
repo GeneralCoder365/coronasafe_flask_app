@@ -1,4 +1,4 @@
-![logo](coronasafe_v2/coronasafe_full_logo_black_background.png)
+![logo](coronasafe_full_logo_black_background.png)
 
 # Table of Contents
 
